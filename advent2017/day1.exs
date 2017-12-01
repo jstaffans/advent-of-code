@@ -25,7 +25,7 @@ defmodule AdventOfCode.Day1 do
   def sum_2(input) do
     l = to_list(input)
     half = div(String.length(input), 2)
-    pair_indexes = Enum.to_list(half..String.length(input)-1) ++ Enum.to_list(0..(half - 1))
+    pair_indexes = Enum.to_list(half..String.length(input)-1) ++ Enum.to_list(0..half)
     l_with_pair_indexes = Enum.zip(pair_indexes, l)
 
     Enum.reduce(
