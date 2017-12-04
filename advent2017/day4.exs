@@ -29,6 +29,3 @@ IO.puts AdventOfCode.Day4.count_valid "aa bb cc dd ee\naa bb cc dd aa\naa bb cc 
 |> String.trim
 |> AdventOfCode.Day4.count_valid
 |> IO.puts
-
-
-Enum.sort(["b", "a"])
