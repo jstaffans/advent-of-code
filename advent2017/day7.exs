@@ -1,15 +1,15 @@
 defmodule AdventOfCode.Day7 do
 
   def parse_tree(input) do
-    nodes =
+    tree =
       input
       |> String.split("\n")
       |> Enum.map(&(to_node(&1)))
+      |> create_tree(%{})
 
-    [root] = nodes |> create_tree(%{}) |> find_root |> Enum.to_list
+    [root] = tree |> find_root |> Enum.to_list
 
-    root
-    # TODO: calculate weights for root's immediate children
+    check_balance(tree, root)
   end
 
   defp create_tree([], tree), do: tree
@@ -42,14 +42,47 @@ defmodule AdventOfCode.Day7 do
     MapSet.difference(node_set, children_set)
   end
 
+  defp check_balance(tree, root) do
+    {_weight, children} = tree[root]
+    child_weights = Enum.map(children, &(calculate_weight(tree, &1)))
+
+    all_same =
+      child_weights
+      |> Enum.map(&(&1 == List.first(child_weights)))
+      |> Enum.all?
+
+    if all_same do
+      tree[root]  # TODO, need to find amount manually currently
+    else
+      heavy_child =
+        child_weights
+        |> Enum.with_index
+        |> Enum.reduce(-1, fn ({weight, i}, result) ->
+        if weight == Enum.max(child_weights), do: i, else: result
+      end)
+
+      check_balance(tree, Enum.at(children, heavy_child))
+    end
+  end
+
+  defp calculate_weight(tree, root_name) do
+    {root_weight, children} = tree[root_name]
+    root_weight + visit_children(tree, children)
+  end
+
+  defp visit_children(tree, [child|rest]) do
+    calculate_weight(tree, child) + visit_children(tree, rest)
+  end
+
+  defp visit_children(tree, []), do: 0
 end
 
 IO.puts "Part one"
 
 IO.inspect AdventOfCode.Day7.parse_tree "pbga (66)\nxhth (57)\nebii (61)\nhavc (66)\nktlj (57)\n fwft (72) -> ktlj, cntj, xhth\nqoyq (66)\npadx (45) -> pbga, havc, qoyq\ntknk (41) -> ugml, padx, fwft\njptl (61)\nugml (68) -> gyxo, ebii, jptl\ngyxo (61)\ncntj (57)"
 
-# "data/day7.txt"
-# |> File.read!
-# |> String.trim
-# |> AdventOfCode.Day7.parse_tree
-# |> IO.inspect
+"data/day7.txt"
+|> File.read!
+|> String.trim
+|> AdventOfCode.Day7.parse_tree
+|> IO.inspect
