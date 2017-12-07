@@ -52,7 +52,7 @@ defmodule AdventOfCode.Day7 do
       |> Enum.all?
 
     if all_same do
-      tree[root]  # TODO, need to find amount manually currently
+      root <> " has wrong weight" # TODO, need to find amount manually currently
     else
       heavy_child =
         child_weights
@@ -76,8 +76,6 @@ defmodule AdventOfCode.Day7 do
 
   defp visit_children(tree, []), do: 0
 end
-
-IO.puts "Part one"
 
 IO.inspect AdventOfCode.Day7.parse_tree "pbga (66)\nxhth (57)\nebii (61)\nhavc (66)\nktlj (57)\n fwft (72) -> ktlj, cntj, xhth\nqoyq (66)\npadx (45) -> pbga, havc, qoyq\ntknk (41) -> ugml, padx, fwft\njptl (61)\nugml (68) -> gyxo, ebii, jptl\ngyxo (61)\ncntj (57)"
 
