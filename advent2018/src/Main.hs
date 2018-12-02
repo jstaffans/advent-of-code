@@ -2,9 +2,10 @@
 
 module Main where
 
+import qualified Day01 as Day01
+import qualified Day02 as Day02
+
 main :: IO ()
 main = do
-  putStrLn "hello world"
-
-greet :: String -> String
-greet name = "Hello " ++ name ++ "!"
+  -- Day01.main
+  Day02.main
