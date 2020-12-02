@@ -1,5 +1,9 @@
 # Advent of Code
 
+### 2020
+
+Solutions in Go.
+
 ### 2018
 
 Solutions in Haskell.
