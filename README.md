@@ -1,5 +1,9 @@
 # Advent of Code
 
+### 2021
+
+Solutions in Rust.
+
 ### 2020
 
 Solutions in Go.
